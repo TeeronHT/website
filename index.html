@@ -1,203 +1,972 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Teeron Hajebi Tabrizi</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="https://kit.fontawesome.com/418cbad222.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
-        <link rel="stylesheet" href="style.css">
-        <style>
-            html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
-        </style>
-    </head>
+<head>
+    <title>Teeron Hajebi</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide Icons -->
+    <script type="module" src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <!-- Load Press Start 2P font for the retro titles -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
 
-    <body class="w3-light-grey">
-        <div id="game-of-life-header">
-            <canvas id="gol-canvas"></canvas>
-            <div id="header-overlay">
-                <h1>Teeron Hajebi</h1>
-                <div class="overlay-label">Conway's Game of Life</div>
-            </div>        
-        </div>
-          
-        <div class="navbar">
-            <a href="" class="active">About Me</a>
-            <!-- <a href="./content/reviews.html">Book Reviews</a>
-                 <a href="./content/publications.html">Publications</a>
-                 <a href="file:///Users/teeron/Desktop/Personal/Job%20Applications/Teeron%20Hajebi%20Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a> -->
-            <a href="https://www.linkedin.com/in/teeron-hajebi/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <a href="https://github.com/TeeronHT" target="_blank" rel="noopener noreferrer">Github</a>
-            <a class="navbar-text">More Content In The Works</a>
-        </div>
-        <!-- Page Container -->
-        <div class="w3-content w3-margin-top" style="max-width:1400px;">
-            <!-- The Grid -->
-            <div class="w3-row-padding">
-                <!-- Left Column -->
-                <div class="w3-third">
-                    <div class="w3-white w3-text-grey w3-card-4">
-                        <div class="w3-display-container">
-                            <img src="images/Teeron.JPEG" style="width:100%" alt="Teeron Hajebi Tabrizi - PFP">
-                        </div>
-                        <div class="w3-container">
-                            <p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-black"></i>Research Assistant</p>
-                            <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-black"></i>Bay Area, CA, U.S.A.</p>
-                            <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-black"></i>teeron@hajebi.net</p>
-                        </div>
-                    </div><br>
-                </div>
-                <div class="w3-twothird">
-                    <div class="w3-container w3-card w3-white w3-margin-bottom">
-                        <h2 class="w3-text-grey w3-padding-16"><i class="far fa-address-book fa-fw w3-margin-right w3-xxlarge w3-text-black"></i>About Me</h2>
-                            <div class="w3-row-padding">    
-                                <div class="w3-white w3-text-grey w3-card-4">
-                                    <div class="w3-container">                                         
-                                        <p class="w3-text-black" style="font-size:14px"><b>Hello there! I am a proud student at UC Berkeley, where I am currently pursuing a double major in Computer Science and Mathematics. I am fascinated by the ever-evolving world of technology and finance, and I am constantly striving to expand my knowledge in these areas.<br><br>
+        :root {
+            --header-height: 200px;
+            --transition-speed: 0.3s;
+        }
 
-                                            As a self-starter with a passion for problem-solving, I love writing scripts to automate tasks and streamline processes. This not only showcases my technical skills, but also my creativity and attention to detail.<br><br>
-                                            
-                                            Aside from my academic pursuits, I am an avid athlete and have a background in competitive skiing and soccer. These experiences have taught me the value of discipline, teamwork, and perseverance, all of which have helped shape me into the well-rounded individual I am today.<br><br>
-                                            
-                                            I am always open to new opportunities and experiences, and I am eager to make a positive impact in the tech and finance industries. If you would like to learn more about me or connect, please don't hesitate to reach out!</b></p>  
-                                    </div>
-                                </div>
-                                <p></p>
-                            </div>
-                            <p></p>
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+            background-color: var(--body-bg);
+            color: var(--text-primary);
+        }
+
+        body.day-mode {
+            --body-bg: #f3f4f6;
+            --text-primary: #1f2937;
+            --surface-bg: #ffffff;
+            --surface-muted: #f9fafb;
+            --surface-border: #e5e7eb;
+            --card-hover: #f1f5f9;
+            --accent-primary: #1e40af;
+            --accent-secondary: #3b82f6;
+            --accent-border: #d1d5db;
+            --header-border: #1e40af;
+            --hint-bg: rgba(30, 64, 175, 0.85);
+            --hint-border: #3b82f6;
+            --nav-bg: #ffffff;
+            --nav-text: #111827;
+            --nav-border: #e5e7eb;
+            --toggle-bg: #e0e7ff;
+            --toggle-text: #1e40af;
+            --footer-bg: #1f2937;
+            --footer-text: #9ca3af;
+            --footer-link: #60a5fa;
+        }
+
+        body.night-mode {
+            --body-bg: #0f172a;
+            --text-primary: #e2e8f0;
+            --surface-bg: #1e293b;
+            --surface-muted: #334155;
+            --surface-border: #475569;
+            --card-hover: #334155;
+            --accent-primary: #6366f1;
+            --accent-secondary: #a5b4fc;
+            --accent-border: #4f46e5;
+            --header-border: #4f46e5;
+            --hint-bg: rgba(79, 70, 229, 0.85);
+            --hint-border: #6366f1;
+            --nav-bg: #1e293b;
+            --nav-text: #e2e8f0;
+            --nav-border: #4f46e5;
+            --toggle-bg: #312e81;
+            --toggle-text: #f8fafc;
+            --footer-bg: #0b1220;
+            --footer-text: #94a3b8;
+            --footer-link: #c7d2fe;
+        }
+
+        #gardenCanvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            filter: brightness(0.95);
+        }
+
+        header {
+            position: relative;
+            width: 100%;
+            height: var(--header-height);
+            overflow: hidden;
+            border-bottom: 4px solid var(--header-border);
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            background:
+                linear-gradient(to right, rgba(243, 244, 246, 0.9) 0%, rgba(243, 244, 246, 0) 60%),
+                repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.05) 0px, rgba(0, 0, 0, 0.05) 1px, transparent 1px, transparent 2px);
+        }
+
+        body.night-mode .overlay {
+            background:
+                linear-gradient(to right, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0) 60%),
+                repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.08) 0px, rgba(255, 255, 255, 0.08) 1px, transparent 1px, transparent 2px);
+        }
+
+        .name-plate h1 {
+            font-family: 'Press Start 2P', cursive;
+            color: var(--accent-primary);
+            text-shadow: 2px 2px 0 var(--accent-secondary);
+            font-size: clamp(1rem, 4vw, 1.5rem);
+            line-height: 1.5;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-family: 'Press Start 2P', cursive;
+            font-size: clamp(0.5rem, 2vw, 0.75rem);
+            color: var(--accent-secondary);
+            margin-top: 5px;
+            display: block;
+            letter-spacing: 1px;
+            font-weight: 400;
+        }
+
+        .hint {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: clamp(8px, 2vw, 10px);
+            color: #fff;
+            background: var(--hint-bg);
+            padding: 8px 12px;
+            border-radius: 4px;
+            pointer-events: none;
+            border: 2px solid var(--hint-border);
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
+            z-index: 10;
+            transition: all 0.2s;
+        }
+
+        .navbar {
+            background-color: var(--nav-bg);
+            color: var(--nav-text);
+            border-color: var(--nav-border);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            height: 100%;
+            padding: 0 1rem;
+            font-weight: 500;
+            transition: color var(--transition-speed) ease, background-color var(--transition-speed) ease;
+            color: var(--nav-text);
+        }
+
+        .nav-link:hover {
+            background-color: var(--surface-muted);
+            color: var(--accent-primary);
+        }
+
+        .nav-link--primary {
+            background-color: var(--accent-primary);
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .nav-link--primary:hover {
+            color: #fff;
+            filter: brightness(1.05);
+        }
+
+        .theme-toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 9999px;
+            background-color: var(--toggle-bg);
+            color: var(--toggle-text);
+            border: 1px solid transparent;
+            transition: background-color var(--transition-speed) ease, transform 0.2s ease;
+        }
+
+        .theme-toggle:focus-visible {
+            outline: 2px solid var(--accent-primary);
+            outline-offset: 2px;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-1px);
+        }
+
+        .theme-icon {
+            display: inline-flex;
+        }
+
+        .theme-icon.icon-moon {
+            display: none;
+        }
+
+        body.night-mode .theme-icon.icon-sun {
+            display: none;
+        }
+
+        body.night-mode .theme-icon.icon-moon {
+            display: inline-flex;
+        }
+
+        .note-text {
+            color: var(--nav-text);
+            opacity: 0.7;
+        }
+
+        .card {
+            background-color: var(--surface-bg);
+            border: 1px solid var(--surface-border);
+            color: inherit;
+            transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, color var(--transition-speed) ease;
+        }
+
+        .resume-section {
+            padding: 2rem;
+        }
+
+        .section-title {
+            color: var(--accent-primary);
+            border-bottom: 1px solid var(--accent-border);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title i {
+            color: currentColor;
+        }
+
+        .accent-panel {
+            border-left: 4px solid var(--accent-primary);
+            background-color: var(--surface-muted);
+            border-radius: 0.75rem;
+            border: 1px solid var(--surface-border);
+            transition: border-color var(--transition-speed) ease, background-color var(--transition-speed) ease;
+        }
+
+        .entry-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .entry-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-badge {
+            width: 48px;
+            height: 48px;
+            border-radius: 0.75rem;
+            object-fit: contain;
+            background-color: var(--surface-bg);
+            border: 1px solid var(--surface-border);
+            padding: 0.35rem;
+        }
+
+        .accent-text {
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+
+        .meta-text {
+            color: inherit;
+            opacity: 0.65;
+        }
+
+        .icon-accent {
+            color: var(--accent-primary);
+        }
+
+        .project-card {
+            background-color: var(--surface-muted);
+            border: 1px solid var(--surface-border);
+            transition: transform 0.2s ease, background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+        }
+
+        .project-card:hover {
+            background-color: var(--card-hover);
+        }
+
+        .accent-link {
+            color: var(--accent-primary);
+            transition: color var(--transition-speed) ease;
+        }
+
+        .accent-link:hover {
+            color: var(--accent-secondary);
+        }
+
+        .site-footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+        }
+
+        .footer-link {
+            color: var(--footer-link);
+            transition: color var(--transition-speed) ease;
+        }
+
+        .footer-link:hover {
+            color: #ffffff;
+        }
+
+        .page-container {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: clamp(0.75rem, 3vw, 4rem);
+            padding-right: clamp(0.75rem, 3vw, 4rem);
+        }
+
+        .content-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        @media (min-width: 640px) {
+            .content-grid {
+                grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+                align-items: start;
+            }
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 640px) {
+            .overlay {
+                padding: 0 15px;
+            }
+            .name-plate h1 {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen day-mode">
+    <!-- START: PIXEL GARDEN HEADER -->
+    <header>
+        <canvas id="gardenCanvas"></canvas>
+        
+        <div class="overlay">
+            <div class="name-plate pointer-events-none">
+                <h1>TEERON HAJEBI<span class="subtitle">UC BERKELEY • CS & MATH</span></h1>
+            </div>
+        </div>
+
+        <div class="hint">TAP TO PLANT 🌱</div>
+    </header>
+    <!-- END: PIXEL GARDEN HEADER -->
+      
+    <!-- NAVBAR -->
+    <nav class="navbar flex items-center sticky top-0 z-10 h-14 border-b">
+        <a href="#about" class="nav-link nav-link--primary text-sm md:text-base px-4 md:px-6">
+            About Me
+        </a>
+        <a href="#education" class="nav-link text-sm md:text-base px-4 md:px-6">
+            Education
+        </a>
+        <a href="#experience" class="nav-link text-sm md:text-base px-4 md:px-6">
+            Experience
+        </a>
+        <a href="#projects" class="nav-link text-sm md:text-base px-4 md:px-6">
+            Projects
+        </a>
+        <div class="ml-auto flex items-center space-x-3 px-4">
+            <span class="note-text text-xs md:text-sm hidden sm:block">More Content In The Works...</span>
+            <button id="themeToggle" type="button" class="theme-toggle" aria-label="Switch to night mode" aria-pressed="false">
+                <i data-lucide="sun" class="theme-icon icon-sun w-5 h-5"></i>
+                <i data-lucide="moon" class="theme-icon icon-moon w-5 h-5"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Container -->
+    <div class="page-container mt-8 pb-12">
+        <div class="content-grid">
+            
+            <!-- Left Column (Sidebar) -->
+            <div class="space-y-8">
+                <!-- Profile Card -->
+                <div class="card shadow-xl rounded-xl overflow-hidden">
+                    <div class="relative">
+                        <img src="images/painter.jpg" class="w-full h-auto object-cover" alt="Teeron Hajebi Headshot">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-100/50 to-transparent"></div>
                     </div>
-                    <div class="w3-container w3-card w3-white w3-margin-bottom">
-                        <h2 class="w3-text-grey w3-padding-16"><i class="fas fa-user-graduate fa-fw w3-margin-right w3-xxlarge w3-text-black"></i>Education</h2>
-                        <div class="w3-row-padding w3-margin-bottom">    
-                            <div class="w3-white w3-text-grey w3-card-4">
-                                <div class="w3-container">
-                                    <p style="font-size:16px"></p>
-                                    <h5 class="w3-text-black" style="font-size:18px"><b>University of California, Berkeley&nbsp;&nbsp;</b><img src="images/cal.png" alt="UC Berkeley Crest" width="50" height="50"></h5>
-                                    <h6 class="w3-opacity w3-text-dark-grey"><i class="fa fa-calendar fa-fw w3-margin-right"></i>August 2022 - Expected: May 2026</h6>
-                                    <p class="w3-text-black" style="margin:0;padding-top:0;;font-size:17px">Bachelor of Arts (BA): Math and Computer Science double major</p>
-                                    <p class="w3-text-black" style="margin:0;padding-top:0;font-size:14px"><b>Iranian Student Culture Organization (ISCO) [External Board Member] (2022-Current)<br>
-                                        Open Computing Facility Volunteer [Linux Infrastructure Team] (2022-Current)<br>
-                                        Ski Team (2022-Current)</b></p>
-                                    <p></p>
-                                </div>
-                            </div>
+                    <!-- Contact Info -->
+                    <div class="p-6 space-y-4">
+                        <div class="flex items-center">
+                            <i data-lucide="briefcase" class="icon-accent w-5 h-5 mr-3"></i>
+                            <p class="text-sm">Research Assistant</p>
                         </div>
-                        <div class="w3-row-padding w3-margin-top">    
-                            <div class="w3-white w3-text-grey w3-card-4">
-                                <div class="w3-container">
-                                    <p style="font-size:16px"></p>
-                                    <h5 class="w3-text-black" style="font-size:18px"><b>Menlo School&nbsp;&nbsp;</b><img src="images/menlo.jpg" alt="Menlo School Crest" width="50" height="50"></h5>
-                                    <h6 class="w3-opacity w3-text-dark-grey"><i class="fa fa-calendar fa-fw w3-margin-right"></i>August 2018 - June 2022</h6>
-                                    <p class="w3-text-black" style="margin:0;padding-top:0;;font-size:17px">High School Diploma</p>
-                                    <p class="w3-text-black" style="margin:0;padding-top:0;font-size:14px"><b>Senior Class Senator (2021-2022)<br>
-                                    Highest Honors (2020-2022)<br>
-                                    Teacher’s Assistant for Computer Science 2 Honors Course (2021-2022)<br>
-                                    Faculty Honor Roll (2018-2020)</b></p>
-                                    <p></p>
-                                </div>
-                                <p></p>
-                            </div>
+                        <div class="flex items-center">
+                            <i data-lucide="home" class="icon-accent w-5 h-5 mr-3"></i>
+                            <p class="text-sm">Bay Area, CA, U.S.A.</p>
                         </div>
-                        <p></p>
-                    </div>
-                    <div class="w3-container w3-card w3-white w3-margin-bottom">
-                        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge w3-text-black"></i>Work Experience</h2>
-                            <div class="w3-row-padding">    
-                                <div class="w3-white w3-text-grey w3-card-4">
-                                    <div class="w3-container">
-                                        <h5 class="w3-text-black" style="font-size:18px"><b>Portal Labs, Inc.&nbsp;&nbsp;</b></h5>
-                                        <h6 class="w3-opacity w3-text-dark-grey"><i class="fa fa-calendar fa-fw w3-margin-right"></i>July 2022 - August 2022</h6>
-                                        <p style="font-size:3px"></p>
-                                        <p class="w3-text-black" style="margin:0;padding-top:0;font-size:14px"><b>Built a data scraper to compile thousands of smart contract addresses<br>
-                                            Populated applications on the backend and managed PostgreSQL databases<br>
-                                            Gave attribution to numerous Open-Source Softwares<br>
-                                            Learned how to create and run images through Docker<br>
-                                            Wrote shell script to condense application start-up steps</b></p>                                        
-                                        <p></p>  
-                                    </div>
-                                </div>
-                                <p></p>
-                            </div>
-                            <p></p>
-                    </div>
-                    <div class="w3-container w3-card w3-white w3-margin-bottom">
-                        <h2 class="w3-text-grey w3-padding-16"><i class="far fa-file-code fa-fw w3-margin-right w3-xxlarge w3-text-black"></i>Programming Projects</h2>
-                        <div class="w3-row-padding">    
-                            <div class="w3-third">
-                                <div class="w3-white w3-text-grey w3-card-4">
-                                    <div class="w3-display-container">
-                                    <img src="images/DCF.png" style="width:100%" alt="Discounted Cash Flow Model">
-                                    </div>
-                                    <div class="w3-container">
-                                        <a href="https://github.com/TeeronHT/DiscountedCashFlowModel" style="text-decoration:none"><p style="color:black"><b>Discounted Cash Flow Model (<a href="https://github.com/TeeronHT/DiscountedCashFlowModel"><i class="fa fa-github w3-hover-opacity"></i></a>)</b></p></a>
-                                    </div>
-                                </div>
-                                <p></p>
-                            </div>
-                            <div class="w3-third">
-                                <div class="w3-white w3-text-grey w3-card-4">
-                                    <div class="w3-display-container">
-                                    <img src="images/CGOL.jpeg" style="width:100%" alt="Conway's Game of Life">
-                                    </div>
-                                    <div class="w3-container">
-                                        <a href="https://github.com/TeeronHT/GameOfLife" style="text-decoration:none"><p style="color:black"><b>Conway's Game of Life (<a href="https://github.com/TeeronHT/GameOfLife"><i class="fa fa-github w3-hover-opacity"></i></a>)</b></p></a>
-                                    </div>
-                                </div>
-                                <p></p>
-                            </div>
-                            <div class="w3-third">
-                                <div class="w3-white w3-text-grey w3-card-4">
-                                    <div class="w3-display-container">
-                                    <img src="images/SeniorAssassin.png" style="width:100%" alt="Senior Assassin">
-                                    </div>
-                                    <div class="w3-container">
-                                        <a href="https://github.com/TeeronHT/SeniorAssassin" style="text-decoration:none"><p style="color:black"><b>Senior Assassin (<a href="https://github.com/TeeronHT/SeniorAssassin"><i class="fa fa-github w3-hover-opacity"></i></a>)</b></p></a>
-                                    </div>
-                                </div>
-                                <p></p>
-                            </div>
+                        <div class="flex items-center">
+                            <i data-lucide="mail" class="icon-accent w-5 h-5 mr-3"></i>
+                            <p class="text-sm break-all">teeron@hajebi.net</p>
                         </div>
-                        <p></p>
-                    </div>
-                    <div class="w3-container w3-card w3-white w3-margin-bottom">
-                        <h2 class="w3-text-grey w3-padding-16"><i class="far far fa-file-alt fa-fw w3-margin-right w3-xxlarge w3-text-black"></i>Interests</h2>
-                        <div class="w3-row-padding">    
-                            <div class="w3-white w3-text-grey w3-card-4">
-                                <div class="w3-container">
-                                    <p></p>
-                                    <p class="w3-text-black" style="font-size:14px">
-                                        <b>Model UN Club: Secretary; attended 7 conferences; multiple 5/5 scores on position papers<br>
-                                        Investment Club: Participate in investment simulation games and research different asset classes<br>
-                                        Current Affairs: Avid learner of political history, foreign policy, finance, and economics<br>
-                                        Soccer: Varsity and JV League champ, playing at Premier level for soccer club<br>
-                                        Avid Skier: Founder and President, Menlo Ski Club; raced competitively in Diamond Peak ski team</p> 
-                                    <p></p>       
-                                </div>
-                            </div>
-                            <p></p>
+                        <div class="flex items-center">
+                            <i data-lucide="linkedin" class="icon-accent w-5 h-5 mr-3"></i>
+                            <a href="https://www.linkedin.com/in/teeron-hajebi/" target="_blank" rel="noopener noreferrer" class="text-sm accent-link">LinkedIn</a>
                         </div>
-                        <p></p>
+                        <div class="flex items-center">
+                            <i data-lucide="github" class="icon-accent w-5 h-5 mr-3"></i>
+                            <a href="https://github.com/TeeronHT" target="_blank" rel="noopener noreferrer" class="text-sm accent-link">GitHub</a>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Right Column (Content) -->
+            <div class="space-y-8">
+
+                <!-- About Me -->
+                <section id="about" class="card resume-section shadow-xl rounded-xl mb-8">
+                    <h2 class="section-title text-2xl md:text-3xl font-bold mb-4 pb-2">
+                        <i data-lucide="user" class="inline w-6 h-6"></i>About Me
+                    </h2>
+                    <div class="leading-relaxed text-base space-y-4">
+                        <p><b>Hello there! I am a proud student at UC Berkeley, where I am currently pursuing a double major in Computer Science and Mathematics. I am fascinated by the ever-evolving world of technology and finance, and I am constantly striving to expand my knowledge in these areas.</b></p>
+                        <p>As a self-starter with a passion for problem-solving, I love writing scripts to automate tasks and streamline processes. This not only showcases my technical skills, but also my creativity and attention to detail.</p>
+                        <p>Aside from my academic pursuits, I am an avid athlete and have a background in competitive skiing and soccer. These experiences have taught me the value of discipline, teamwork, and perseverance, all of which have helped shape me into the well-rounded individual I am today.</p>
+                        <p>I am always open to new opportunities and experiences, and I am eager to make a positive impact in the tech and finance industries. If you would like to learn more about me or connect, please don't hesitate to reach out!</p>
+                    </div>
+                </section>
+
+                <!-- Education -->
+                <section id="education" class="card resume-section shadow-xl rounded-xl mb-8">
+                    <h2 class="section-title text-2xl md:text-3xl font-bold mb-6 pb-2">
+                        <i data-lucide="graduation-cap" class="inline w-6 h-6"></i>Education
+                    </h2>
+                    
+                    <!-- UC Berkeley -->
+                    <div class="accent-panel mb-6 p-4 rounded-lg">
+                        <div class="entry-header">
+                            <div class="entry-title">
+                                <img src="images/cal.png" alt="UC Berkeley logo" class="logo-badge">
+                                <h5 class="text-xl font-semibold">University of California, Berkeley</h5>
+                            </div>
+                            <span class="meta-text text-xs whitespace-nowrap">
+                                <i data-lucide="calendar" class="inline w-4 h-4 mr-1"></i>2022 - 2026 (Expected)
+                            </span>
+                        </div>
+                        <p class="accent-text text-lg mt-1">Bachelor of Arts (BA): Math and Computer Science double major</p>
+                        <ul class="list-disc list-inside text-sm mt-2 space-y-1 ml-4">
+                            <li>Iranian Student Culture Organization (ISCO) [External Board Member]</li>
+                            <li>Open Computing Facility Volunteer [Linux Infrastructure Team]</li>
+                            <li>Ski Team</li>
+                        </ul>
+                    </div>
+
+                    <!-- Menlo School -->
+                    <div class="accent-panel p-4 rounded-lg">
+                        <div class="entry-header">
+                            <div class="entry-title">
+                                <img src="images/menlo.png" alt="Menlo School logo" class="logo-badge">
+                                <h5 class="text-xl font-semibold">Menlo School</h5>
+                            </div>
+                            <span class="meta-text text-xs whitespace-nowrap">
+                                <i data-lucide="calendar" class="inline w-4 h-4 mr-1"></i>2018 - 2022
+                            </span>
+                        </div>
+                        <p class="accent-text text-lg mt-1">High School Diploma</p>
+                        <ul class="list-disc list-inside text-sm mt-2 space-y-1 ml-4">
+                            <li>Senior Class Senator (2021-2022)</li>
+                            <li>Highest Honors (2020-2022)</li>
+                            <li>Teacher’s Assistant for Computer Science 2 Honors Course (2021-2022)</li>
+                            <li>Faculty Honor Roll (2018-2020)</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Work Experience -->
+                <section id="experience" class="card resume-section shadow-xl rounded-xl mb-8">
+                    <h2 class="section-title text-2xl md:text-3xl font-bold mb-6 pb-2">
+                        <i data-lucide="briefcase" class="inline w-6 h-6"></i>Work Experience
+                    </h2>
+                    
+                    <!-- Portal Labs -->
+                    <div class="accent-panel p-4 rounded-lg">
+                        <div class="entry-header">
+                            <div class="entry-title">
+                                <img src="images/portal.png" alt="Portal Labs logo" class="logo-badge">
+                                <h5 class="text-xl font-semibold">Portal Labs, Inc.</h5>
+                            </div>
+                            <span class="meta-text text-xs whitespace-nowrap">
+                                <i data-lucide="calendar" class="inline w-4 h-4 mr-1"></i>July 2022 - August 2022
+                            </span>
+                        </div>
+                        <ul class="list-disc list-inside text-sm mt-3 space-y-1 ml-4">
+                            <li>Built a data scraper to compile thousands of smart contract addresses</li>
+                            <li>Populated applications on the backend and managed PostgreSQL databases</li>
+                            <li>Gave attribution to numerous Open-Source Softwares</li>
+                            <li>Learned how to create and run images through Docker</li>
+                            <li>Wrote shell script to condense application start-up steps</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Programming Projects -->
+                <section id="projects" class="card resume-section shadow-xl rounded-xl mb-8">
+                    <h2 class="section-title text-2xl md:text-3xl font-bold mb-6 pb-2">
+                        <i data-lucide="code" class="inline w-6 h-6"></i>Programming Projects
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        
+                        <!-- DCF Model -->
+                        <div class="project-card rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-[1.02]">
+                            <img src="images/DCF.png" class="w-full h-36 object-cover" alt="Discounted Cash Flow Model preview">
+                            <div class="p-4">
+                                <a href="https://github.com/TeeronHT/DiscountedCashFlowModel" target="_blank" class="accent-link text-lg font-semibold flex items-center">
+                                    DCF Model 
+                                    <i data-lucide="github" class="w-4 h-4 ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Game of Life -->
+                        <div class="project-card rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-[1.02]">
+                            <img src="images/CGOL.jpeg" class="w-full h-36 object-cover" alt="Conway's Game of Life grid">
+                            <div class="p-4">
+                                <a href="https://github.com/TeeronHT/GameOfLife" target="_blank" class="accent-link text-lg font-semibold flex items-center">
+                                    Conway's Game of Life 
+                                    <i data-lucide="github" class="w-4 h-4 ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Senior Assassin -->
+                        <div class="project-card rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-[1.02]">
+                            <img src="images/SeniorAssassin.png" class="w-full h-36 object-cover" alt="Senior Assassin app preview">
+                            <div class="p-4">
+                                <a href="https://github.com/TeeronHT/SeniorAssassin" target="_blank" class="accent-link text-lg font-semibold flex items-center">
+                                    Senior Assassin 
+                                    <i data-lucide="github" class="w-4 h-4 ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Interests -->
+                <section class="card resume-section shadow-xl rounded-xl mb-8">
+                    <h2 class="section-title text-2xl md:text-3xl font-bold mb-6 pb-2">
+                        <i data-lucide="star" class="inline w-6 h-6"></i>Interests
+                    </h2>
+                    <ul class="list-disc list-inside text-sm space-y-2 ml-4">
+                        <li><b>Model UN Club:</b> Secretary; attended 7 conferences; multiple 5/5 scores on position papers.</li>
+                        <li><b>Investment Club:</b> Participate in investment simulation games and research different asset classes.</li>
+                        <li><b>Current Affairs:</b> Avid learner of political history, foreign policy, finance, and economics.</li>
+                        <li><b>Soccer:</b> Varsity and JV League champ, playing at Premier level for soccer club.</li>
+                        <li><b>Avid Skier:</b> Founder and President, Menlo Ski Club; raced competitively in Diamond Peak ski team.</li>
+                    </ul>
+                </section>
+
+            </div>
         </div>
-        <footer class="w3-container w3-black w3-center w3-margin-top">
-            <p></p>
-            <p>LinkedIn&nbsp;&nbsp;<a href="https://www.linkedin.com/in/teeron-hajebi/"><i class="fa fa-linkedin w3-hover-opacity"></i></a>
-            <br>Github&nbsp;&nbsp;<a href="https://github.com/TeeronHT"><i class="fa fa-github w3-hover-opacity"></i></a></p>
-            <p></p>
-        </footer>
-        <script type="module">
-            import { startGameOfLife } from './scripts/gameOfLife.js';
-            const canvas = document.getElementById('gol-canvas');
-            startGameOfLife(canvas, {
-              cellSize: 10,
-              cellColor: '#00FF00'
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer text-center py-6 mt-12">
+        <p class="mb-3 text-sm">Connect with me</p>
+        <div class="flex justify-center space-x-6">
+            <a href="https://www.linkedin.com/in/teeron-hajebi/" target="_blank" class="footer-link transition-colors">
+                <i data-lucide="linkedin" class="w-6 h-6"></i>
+            </a>
+            <a href="https://github.com/TeeronHT" target="_blank" class="footer-link transition-colors">
+                <i data-lucide="github" class="w-6 h-6"></i>
+            </a>
+        </div>
+        <p class="mt-4 text-xs">Built with Pixels and Code | Teeron Hajebi &copy; 2024</p>
+    </footer>
+    
+    <!-- Inline JavaScript for the Pixel Garden -->
+    <script type="module">
+        // Start of pixelGarden.js content (exported function defined inline)
+        function startPixelGarden(canvas) {
+          const ctx = canvas.getContext("2d");
+          const PIXEL_SIZE = 3;
+          let logicalWidth, logicalHeight;
+        
+          const COLORS = {
+            grassBase: "#388e3c",
+            grassLight: "#4caf50",
+            grassDark: "#2e7d32",
+            soil: "#795548",
+            skin: "#ffcc80",
+            jacket: "#0277bd",
+            hat: "#d32f2f",
+            pants: "#263238",
+            bag: "#fbc02d",
+            water: "#29b6f6",
+            flowerStems: "#33691e",
+            flowers: ["#e91e63", "#9c27b0", "#ffeb3b", "#ffffff", "#ff5722"],
+          };
+        
+          let plants = [];
+          let particles = [];
+          let grassMap = [];
+        
+          const gardener = {
+            x: 50,
+            y: 50,
+            targetX: 50,
+            targetY: 50,
+            state: "IDLE",
+            timer: 0,
+            frame: 0,
+            direction: 1,
+          };
+        
+          class Plant {
+            constructor(x, y) {
+              this.x = x;
+              this.y = y;
+              this.age = 0;
+              this.maxAge = 120 + Math.random() * 100;
+              this.stage = 0;
+              this.color = COLORS.flowers[Math.floor(Math.random() * COLORS.flowers.length)];
+              this.variant = Math.floor(Math.random() * 3);
+            }
+        
+            grow() {
+              if (this.age < this.maxAge) {
+                this.age++;
+                if (this.age > 40) this.stage = 1;
+                if (this.age > 90) this.stage = 2;
+              }
+            }
+        
+            draw(ctx) {
+              ctx.fillStyle = COLORS.flowerStems;
+              if (this.stage === 0) {
+                ctx.fillRect(this.x, this.y, 2, 2);
+              } else if (this.stage === 1) {
+                ctx.fillRect(this.x, this.y, 1, 2);
+                ctx.fillRect(this.x - 1, this.y - 1, 3, 1);
+                ctx.fillRect(this.x, this.y - 2, 1, 1);
+              } else {
+                ctx.fillRect(this.x, this.y, 1, 1);
+                ctx.fillRect(this.x, this.y - 1, 1, 3);
+                ctx.fillStyle = COLORS.grassDark;
+                ctx.fillRect(this.x - 1, this.y - 1, 1, 1);
+                ctx.fillRect(this.x + 1, this.y - 1, 1, 1);
+                ctx.fillStyle = this.color;
+                if (this.variant === 0) {
+                  ctx.fillRect(this.x - 1, this.y - 4, 3, 3);
+                  ctx.fillStyle = "rgba(0,0,0,0.1)";
+                  ctx.fillRect(this.x - 1, this.y - 2, 3, 1);
+                  ctx.fillStyle = "#fff";
+                  ctx.fillRect(this.x, this.y - 3, 1, 1);
+                } else {
+                  ctx.fillRect(this.x, this.y - 4, 1, 1);
+                  ctx.fillRect(this.x - 1, this.y - 3, 3, 1);
+                  ctx.fillRect(this.x, this.y - 2, 1, 1);
+                }
+              }
+            }
+          }
+        
+          class Particle {
+            constructor(x, y, color) {
+              this.x = x;
+              this.y = y;
+              this.color = color;
+              this.life = 25;
+              this.vx = (Math.random() - 0.5) * 1.5;
+              this.vy = (Math.random() - 1) * 1.5;
+              this.gravity = 0.05;
+            }
+            update() {
+              this.x += this.vx;
+              this.y += this.vy;
+              this.vy += this.gravity;
+              this.life--;
+            }
+            draw(ctx) {
+              ctx.fillStyle = this.color;
+              ctx.fillRect(Math.round(this.x), Math.round(this.y), 1, 1);
+            }
+          }
+        
+          function generateGrassMap() {
+            grassMap = [];
+            for (let y = 0; y < logicalHeight; y += 2) {
+              const row = [];
+              for (let x = 0; x < logicalWidth; x += 2) {
+                const r = Math.random();
+                if (r > 0.8) row.push(1);
+                else if (r > 0.6) row.push(2);
+                else row.push(0);
+              }
+              grassMap.push(row);
+            }
+          }
+        
+          function initialPopulate() {
+            for (let i = 0; i < 40; i++) {
+              const plant = new Plant(
+                Math.floor(Math.random() * logicalWidth),
+                Math.floor(Math.random() * (logicalHeight - 10) + 5)
+              );
+              plant.age = Math.random() * 100;
+              plant.grow();
+              plants.push(plant);
+            }
+          }
+        
+          function resize() {
+            const rect = canvas.getBoundingClientRect();
+            logicalWidth = Math.ceil(rect.width / PIXEL_SIZE);
+            logicalHeight = Math.ceil(rect.height / PIXEL_SIZE);
+            canvas.width = logicalWidth;
+            canvas.height = logicalHeight;
+            generateGrassMap();
+            if (plants.length === 0) initialPopulate();
+          }
+        
+          function spawnWaterParticles(x, y) {
+            for (let i = 0; i < 6; i++) {
+              particles.push(new Particle(x, y, COLORS.water));
+            }
+          }
+        
+          function updateGardener() {
+            if (gardener.state === "IDLE") {
+              gardener.timer--;
+              if (gardener.timer <= 0) {
+                gardener.targetX = Math.floor(Math.random() * (logicalWidth - 20)) + 10;
+                gardener.targetY = Math.floor(Math.random() * (logicalHeight - 20)) + 10;
+                gardener.state = "WALKING";
+                gardener.direction = gardener.targetX > gardener.x ? 1 : -1;
+              }
+            } else if (gardener.state === "WALKING") {
+              const speed = 0.8;
+              const dx = gardener.targetX - gardener.x;
+              const dy = gardener.targetY - gardener.y;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist < 1) {
+                gardener.state = "WATERING";
+                gardener.timer = 40;
+              } else {
+                gardener.x += (dx / dist) * speed;
+                gardener.y += (dy / dist) * speed;
+                gardener.frame += 0.2;
+              }
+            } else if (gardener.state === "WATERING") {
+              gardener.timer--;
+              if (gardener.timer % 5 === 0) {
+                const spoutX = gardener.direction === 1 ? gardener.x + 10 : gardener.x - 4;
+                spawnWaterParticles(spoutX, gardener.y + 6);
+                if (Math.random() > 0.6) {
+                  plants.push(
+                    new Plant(
+                      Math.round(spoutX + (Math.random() * 6 - 3)),
+                      Math.round(gardener.y + 10)
+                    )
+                  );
+                }
+              }
+              if (gardener.timer <= 0) {
+                gardener.state = "IDLE";
+                gardener.timer = 40 + Math.random() * 60;
+              }
+            }
+          }
+        
+          function drawGardener(ctx) {
+            const x = Math.round(gardener.x);
+            const y = Math.round(gardener.y);
+            const dir = gardener.direction;
+            const bob = gardener.state === "WALKING" && Math.sin(gardener.frame) > 0 ? 1 : 0;
+            const stepOffset = gardener.state === "WALKING" ? bob : 0;
+        
+            ctx.fillStyle = "rgba(0,0,0,0.3)";
+            ctx.fillRect(x + 2, y + 13, 8, 3);
+        
+            ctx.fillStyle = COLORS.pants;
+            // Left Leg
+            ctx.fillRect(x + 3, y + 10 + stepOffset, 2, 4);
+            // Right Leg
+            ctx.fillRect(x + 7, y + 10 - stepOffset, 2, 4);
+            
+            ctx.fillStyle = "#111"; // Shoes
+            ctx.fillRect(x + 3, y + 13 + stepOffset, 2, 1);
+            ctx.fillRect(x + 7, y + 13 - stepOffset, 2, 1);
+        
+            ctx.fillStyle = COLORS.jacket;
+            ctx.fillRect(x + 2, y + 5, 8, 5);
+            ctx.fillStyle = "#005f98";
+            ctx.fillRect(x + 2, y + 9, 8, 1);
+        
+            ctx.fillStyle = COLORS.skin;
+            ctx.fillRect(x + 3, y + 1, 6, 4);
+        
+            ctx.fillStyle = COLORS.hat;
+            ctx.fillRect(x + 2, y, 8, 2);
+            ctx.fillStyle = "#c0392b";
+            if (dir === 1) ctx.fillRect(x + 7, y + 1, 4, 1);
+            else ctx.fillRect(x + 1, y + 1, 4, 1);
+        
+            if (gardener.state === "WATERING") {
+              ctx.fillStyle = "#bdc3c7"; // Watering can
+              if (dir === 1) {
+                ctx.fillRect(x + 8, y + 6, 5, 4);
+                ctx.fillStyle = "#7f8c8d";
+                ctx.fillRect(x + 13, y + 5, 1, 2); // Spout
+              } else {
+                ctx.fillRect(x - 1, y + 6, 5, 4);
+                ctx.fillStyle = "#7f8c8d";
+                ctx.fillRect(x - 2, y + 5, 1, 2); // Spout
+              }
+            }
+          }
+        
+          function loop() {
+            ctx.clearRect(0, 0, logicalWidth, logicalHeight);
+            ctx.fillStyle = COLORS.grassBase;
+            ctx.fillRect(0, 0, logicalWidth, logicalHeight);
+        
+            for (let y = 0; y < grassMap.length; y++) {
+              if (!grassMap[y]) continue;
+              for (let x = 0; x < grassMap[y].length; x++) {
+                const type = grassMap[y][x];
+                const px = x * 2;
+                const py = y * 2;
+                if (type === 1) {
+                  ctx.fillStyle = COLORS.grassDark;
+                  ctx.fillRect(px, py, 2, 1);
+                  ctx.fillRect(px + 1, py + 1, 1, 1);
+                } else if (type === 2) {
+                  ctx.fillStyle = COLORS.grassLight;
+                  ctx.fillRect(px, py, 1, 1);
+                }
+              }
+            }
+        
+            const renderList = [];
+            plants.forEach((plant) => {
+              plant.grow();
+              renderList.push({ type: "plant", obj: plant, y: plant.y });
             });
-          </script>
-          
-    </body>
+            updateGardener();
+            renderList.push({ type: "gardener", obj: gardener, y: gardener.y + 14 });
+            
+            // Sort to ensure proper depth rendering (painter's algorithm for pixel art)
+            renderList.sort((a, b) => a.y - b.y);
+            
+            renderList.forEach((item) => {
+              if (item.type === "plant") item.obj.draw(ctx);
+              else if (item.type === "gardener") drawGardener(ctx);
+            });
+        
+            for (let i = particles.length - 1; i >= 0; i--) {
+              particles[i].update();
+              particles[i].draw(ctx);
+              if (particles[i].life <= 0) {
+                particles.splice(i, 1);
+              }
+            }
+        
+            requestAnimationFrame(loop);
+          }
+        
+          function handleCanvasClick(e) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const clientX = e.clientX || e.touches?.[0]?.clientX;
+            const clientY = e.clientY || e.touches?.[0]?.clientY;
+            const x = Math.floor((clientX - rect.left) * scaleX);
+            const y = Math.floor((clientY - rect.top) * scaleY);
+            
+            // Limit movement to visible area
+            gardener.targetX = Math.max(10, Math.min(logicalWidth - 10, x));
+            gardener.targetY = Math.max(10, Math.min(logicalHeight - 10, y));
+
+            gardener.state = "WALKING";
+            gardener.direction = gardener.targetX > gardener.x ? 1 : -1;
+          }
+        
+          window.addEventListener("resize", resize);
+          canvas.addEventListener("click", handleCanvasClick);
+          canvas.addEventListener("touchstart", (e) => {
+            e.preventDefault();
+            handleCanvasClick(e);
+          });
+        
+          resize();
+          loop();
+        }
+        // End of pixelGarden.js content
+
+        const THEME_STORAGE_KEY = 'preferred-theme';
+
+        function applyStoredTheme() {
+            const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+            if (savedTheme === 'night') {
+                document.body.classList.add('night-mode');
+            } else {
+                document.body.classList.remove('night-mode');
+            }
+        }
+
+        function updateToggleAria(theme) {
+            const toggleButton = document.getElementById('themeToggle');
+            if (!toggleButton) return;
+            toggleButton.setAttribute('aria-pressed', theme === 'night');
+            toggleButton.setAttribute('aria-label', theme === 'night' ? 'Switch to day mode' : 'Switch to night mode');
+        }
+
+        function toggleTheme() {
+            const isNight = document.body.classList.toggle('night-mode');
+            const theme = isNight ? 'night' : 'day';
+            localStorage.setItem(THEME_STORAGE_KEY, theme);
+            updateToggleAria(theme);
+        }
+
+        function initializeThemeToggle() {
+            const toggleButton = document.getElementById('themeToggle');
+            const currentTheme = document.body.classList.contains('night-mode') ? 'night' : 'day';
+            updateToggleAria(currentTheme);
+            if (toggleButton) {
+                toggleButton.addEventListener('click', toggleTheme);
+            }
+        }
+
+        applyStoredTheme();
+        
+        // Initialization
+        window.onload = () => {
+            const gardenCanvas = document.getElementById('gardenCanvas');
+            startPixelGarden(gardenCanvas);
+            initializeThemeToggle();
+            // Initialize Lucide icons
+            lucide.createIcons();
+        }
+    </script>
+      
+</body>
 </html>
